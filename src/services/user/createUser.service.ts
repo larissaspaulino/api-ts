@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 export const createUserService = ({ nome, email, password }: UserPostRequest) => {
     const emailCheck = db.find(user => user.email === email) 
-    console.log('oi')
 
     if (emailCheck) {
         throw new Error ('Email already exists')

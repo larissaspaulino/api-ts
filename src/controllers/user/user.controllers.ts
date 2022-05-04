@@ -2,6 +2,12 @@ import { Request, Response } from 'express'
 import { createUserService } from '../../services/user/createUser.service'
 import { listUserService } from '../../services/user/listUser.service'
 
+interface ResponsePost {
+  email: string;
+  id: string;
+  nome: string;
+}
+
 export default class userController {
   store(request: Request, response: Response) {
     try {
@@ -20,7 +26,7 @@ export default class userController {
   index(request: Request, response: Response) {
     try {
       const users = listUserService()
-      const usersWithoutPassword = users.forEach(user => delete user.password)
+      const usersWithoutPassword = users.map(({ email, id, nome}) => ({ id, nome, email }))
       return response.json(usersWithoutPassword)
     } catch (err) {
       if (err instanceof Error) {
